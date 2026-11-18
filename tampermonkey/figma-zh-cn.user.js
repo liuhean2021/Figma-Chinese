@@ -93,7 +93,7 @@
     },
     transEngine: 'iflyrec',
     REMOTE_DICT: {
-      url: 'https://raw.githubusercontent.com/Zazak1/Figma-Chinese/main/dict/figma-zh-CN.json',
+      url: 'https://raw.githubusercontent.com/liuhean2021/Figma-Chinese/main/dict/figma-zh-CN.json',
       timeout: 8000,
       cacheKey: 'remote_dict_cache_v1',
       cacheAtKey: 'remote_dict_cache_at_v1',
@@ -163,6 +163,30 @@
   "More options": "更多选项",
   "Libraries": "资源库",
   "Fill": "填充",
+  "Stroke": "描边",
+  "Mask": "蒙版",
+  "Layer": "图层",
+  "Instance": "实例",
+  "Boolean": "布尔运算",
+  "Subtract": "减去顶层",
+  "Intersect": "相交",
+  "Exclude": "排除重叠",
+  "Variant": "变体",
+  "Crop": "裁剪",
+  "Multiply": "正片叠底",
+  "Darken": "变暗",
+  "Lighten": "变亮",
+  "Dissolve": "溶解",
+  "Luminosity": "明度",
+  "Saturation": "饱和度",
+  "Pattern": "图案",
+  "Library": "资源库",
+  "Branch": "分支",
+  "Merge": "合并",
+  "Bend": "弯曲",
+  "Arrow": "箭头",
+  "Swap": "替换",
+  "Wrap": "换行",
   "Dismiss": "忽略",
   "Try again": "重试",
   "Title": "标题",
@@ -399,7 +423,8 @@
   "Try Figma Buzz": "试用 Figma Buzz",
   "Upgrade to Organization": "升级到组织版",
   "Upgrade to a Professional plan": "升级到专业版套餐",
-  "Upgrade to an Organization plan": "升级到组织版套餐"
+  "Upgrade to an Organization plan": "升级到组织版套餐",
+  "Ready for dev": "可开发"
 }
 ;
 
@@ -469,7 +494,16 @@
     try {
       const parsed = JSON.parse(raw);
       if (parsed && typeof parsed === 'object') {
+        // 人工词典优先：丢弃与内置词典冲突的机翻缓存（如 Stroke -> 中风）
+        let removed = 0;
+        for (const k of Object.keys(parsed)) {
+          if (lookupTranslation(k)) {
+            delete parsed[k];
+            removed += 1;
+          }
+        }
         LEARN_STATE.learned = parsed;
+        if (removed > 0) persistLearnedDictionary();
       }
       const merged = mergeDict(parsed);
       if (merged > 0) debugLog(`learned dict merged: ${merged}`);

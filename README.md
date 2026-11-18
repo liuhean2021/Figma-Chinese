@@ -33,7 +33,7 @@
 
 1. 安装浏览器扩展 `Tampermonkey`。
 2. 打开下面链接并安装脚本：  
-   [figma-zh-cn.user.js](https://raw.githubusercontent.com/Zazak1/Figma-Chinese/main/tampermonkey/figma-zh-cn.user.js)
+   [figma-zh-cn.user.js](https://raw.githubusercontent.com/liuhean2021/Figma-Chinese/main/tampermonkey/figma-zh-cn.user.js)
 3. 访问 [https://www.figma.com/](https://www.figma.com/) 并刷新页面。
 
 ### 方式 B：本地手动安装
@@ -44,7 +44,7 @@
 
 ## 远程词库
 
-- 默认远程地址：`https://raw.githubusercontent.com/Zazak1/Figma-Chinese/main/dict/figma-zh-CN.json`
+- 默认远程地址：`https://raw.githubusercontent.com/liuhean2021/Figma-Chinese/main/dict/figma-zh-CN.json`
 - 行为：启动时尝试拉取并合并；失败时自动回退本地内置词库（不影响可用性）
 - 讯飞学习：本地词库未命中时，后台调用讯飞接口翻译并写入持久化词库
 - 缓存：本地缓存 24 小时
@@ -99,3 +99,7 @@ node --check tampermonkey/replacements.js
 
 本项目为第三方脚本，与 Figma 官方无关。  
 请仅在你信任的环境中使用，并自行评估脚本风险。
+
+## 维护词典
+
+只改 `dict/figma-zh-CN.json`，然后运行 `python3 scripts/sync_dict.py`，会自动同步到 `tampermonkey/` 下的两个 JS 文件。
